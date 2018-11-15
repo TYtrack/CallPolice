@@ -573,6 +573,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isFirstLocation=false;
             showInfo("位置：" + location.getLatitude()+"    "+location.getLongitude());
         }
+        MyLocationData.Builder locationBuilder=new MyLocationData.Builder();
+        locationBuilder.latitude(location.getLatitude());
+        locationBuilder.longitude(location.getLongitude());
+        MyLocationData locationData=locationBuilder.build();
+        baidumap.setMyLocationData(locationData);
+
+
     }
 
 
@@ -628,6 +635,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLocationClient.stop();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         map.onDestroy();
+        baidumap.setMyLocationEnabled(false);
         latlngs.clear();
         ids.clear();
         //polygons.clear();
@@ -661,6 +669,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         location.setOnClickListener(MainActivity.this);
         map = (MapView) findViewById(R.id.map);
         baidumap = map.getMap();
+        baidumap.setMyLocationEnabled(true);
         Log.e("rrrr","11111111111111");
         //给marker设置点击事件，用来删除marker
         baidumap.setOnMarkerClickListener(this);
